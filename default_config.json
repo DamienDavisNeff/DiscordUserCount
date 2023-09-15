@@ -1,0 +1,6 @@
+// rename this to config.json & remove this comment
+{
+    "serverID":"",
+    "channelID":"",
+    "channelName":"🛒${memberAmount} Customers"
+}

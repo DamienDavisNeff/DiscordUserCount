@@ -23,15 +23,22 @@ for (const file of commandFiles) {
 
 client.once(Events.ClientReady, () => {
 	console.log('Ready!');
+	UpdateMemberCount();
 });
+
+// RUNS WHEN MEMBER JOINS
+client.on(Events.GuildMemberAdd, () => {
+	UpdateMemberCount();
+});
+// RUNS WHEN MEMBER LEAVES
+client.on(Events.GuildMemberRemove, () => {
+	UpdateMemberCount();
+})
 
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
-
 	const command = client.commands.get(interaction.commandName);
-
 	if (!command) return;
-
 	try {
 		await command.execute(interaction);
 	} catch (error) {
@@ -40,3 +47,14 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 });
 client.login(token);
+
+//
+
+const config = require("./config.json");
+
+async function UpdateMemberCount() {
+	const server = client.guilds.cache.get(config.serverID);
+	const memberAmount = server.memberCount.toLocaleString();
+	const channel = server.channels.cache.get(config.channelID);
+	channel.setName(config.channelName.replace("${memberAmount}",memberAmount));
+}
