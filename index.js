@@ -5,7 +5,7 @@ const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 const token = process.env.DISCORD_TOKEN;
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildModeration, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildPresences] });
 
 process.on('uncaughtException', (error) => {
     console.error(error);
@@ -26,6 +26,7 @@ client.once(Events.ClientReady, () => {
 	UpdateMemberCount();
 });
 
+/*
 // RUNS WHEN MEMBER JOINS
 client.on(Events.GuildMemberAdd, () => {
 	UpdateMemberCount();
@@ -33,7 +34,16 @@ client.on(Events.GuildMemberAdd, () => {
 // RUNS WHEN MEMBER LEAVES
 client.on(Events.GuildMemberRemove, () => {
 	UpdateMemberCount();
-})
+});
+// RUNS WHEN MEMBER BANNED
+client.on(Events.GuildBanAdd, () => {
+	UpdateMemberCount();
+});
+// RUNS WHEN MEMBER UNBANNED
+client.on(Events.GuildBanRemove, () => {
+	UpdateMemberCount();
+});
+*/
 
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
@@ -53,8 +63,10 @@ client.login(token);
 const config = require("./config.json");
 
 async function UpdateMemberCount() {
-	const server = client.guilds.cache.get(config.serverID);
-	const memberAmount = server.memberCount.toLocaleString();
-	const channel = server.channels.cache.get(config.channelID);
-	channel.setName(config.channelName.replace("${memberAmount}",memberAmount));
+	setInterval(() => {
+		const server = client.guilds.cache.get(config.serverID);
+		const memberAmount = server.memberCount.toLocaleString();
+		const channel = server.channels.cache.get(config.channelID);
+		channel.setName(config.channelName.replace("${memberAmount}",memberAmount));
+	}, 60000);
 }
