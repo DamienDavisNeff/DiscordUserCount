@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "node-schedule": "^2.1.1"
+  },
+  "name": "user-count",
+  "description": "A starter discord bot that serves as a starter project to help me with my workflow.\r ***\r ### Important Notes!\r ***\r Rename `default.env` to `.env`  \r ```bash\r ren default.env .env\r ```\r Include your node modules in `build.sh`  \r ```bash\r npm init -y\r npm i discord.js\r npm i dotenv\r ...\r npm i YOUR_MODULES\r ```\r Add your info to `.env`\r ```env\r DISCORD_TOKEN=\"YOUR_TOKEN_HERE\"\r DISCORD_BOT_ID=\"YOUR_BOT_ID\"\r DISCORD_DEV_SERVER_ID=\"YOUR_DEV_SERVER_ID\"\r ...\r YOUR_PRIVATE_VARIABLE=\"YOUR_PRIVATE_CONTENT\"\r ```\r ***",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
