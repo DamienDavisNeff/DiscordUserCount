@@ -4,6 +4,7 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 const token = process.env.DISCORD_TOKEN;
+const config = require("./config.json");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildModeration, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildPresences] });
 
@@ -16,14 +17,21 @@ client.once(Events.ClientReady, () => {
 	UpdateMemberCount();
 });
 
-client.on("guildMemberAdd", UpdateMemberCount()); // RUNS WHEN MEMBER JOINS
-client.on("guildMemberRemove", UpdateMemberCount()); // RUNS WHEN MEMBER LEAVES
+// RUNS WHEN MEMBER JOINS
+client.on("guildMemberAdd", () => {
+	UpdateMemberCount();
+});
+// RUNS WHEN MEMBER LEAVES
+client.on("guildMemberRemove", () => {
+	UpdateMemberCount();
+});
 
+client.on(Events.InteractionCreate, async interaction => {
+});
 client.login(token);
 
 //
 
-const config = require("./config.json");
 
 async function UpdateMemberCount() {
 	const server = client.guilds.cache.get(config.serverID);
